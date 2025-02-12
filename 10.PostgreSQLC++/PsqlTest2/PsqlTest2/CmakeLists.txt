@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.20)
+project(PsqlTest2)
+add_executable(PsqlTest2 main.cpp)
+add_subdirectory(C:\Users\s.pelevin\Desktop\libpqxx-7.9.2 libpq-build)
+target_compile_features(PsqlTest2 PRIVATE cxx_std_20)
+target_link_libraries(PsqlTest2 PRIVATE pqxx)
