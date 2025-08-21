@@ -1,0 +1,12 @@
+services:
+  gcc-app:
+    build: .
+    command: ["./parallel_for_each_gcc"]
+    container_name: parallel_gcc
+
+  clang-app:
+    build: .
+    command: ["./parallel_for_each_clang"]
+    container_name: parallel_clang
+    depends_on:
+      - gcc-app

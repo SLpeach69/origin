@@ -1,0 +1,25 @@
+FROM gcc:12 as gcc-builder
+
+WORKDIR /app
+COPY src/main.cpp .
+RUN g++ -std=c++17 -pthread -o parallel_for_each_gcc main.cpp
+
+FROM ubuntu:22.04 as clang-builder
+
+RUN apt-get update && apt-get install -y \
+    clang \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY src/main.cpp .
+RUN clang++ -std=c++17 -pthread -o parallel_for_each_clang main.cpp
+
+FROM ubuntu:22.04
+
+WORKDIR /app
+COPY --from=gcc-builder /app/parallel_for_each_gcc .
+COPY --from=clang-builder /app/parallel_for_each_clang .
+
+RUN apt-get update && apt-get install -y \
+    libstdc++6 \
+    && rm -rf /var/lib/apt/lists/*
