@@ -13,6 +13,7 @@
 #include <queue>
 #include <map>
 #include <pqxx/pqxx>
+#include <openssl/ssl.h>
 
 using std::string;
 using namespace boost::beast;
@@ -41,6 +42,7 @@ private:
 	void Task_Load_BD(string html, string host, string path);
 	string Load_HTML(const string host, const string path, const string port);
 	std::pair<string, string> Razbor_Url_HTML(const string& url, string& Host);
+	std::pair<string, string> HandleRedirect(const http::response<http::string_body>& response,const string& current_host, const string& current_path);
 	void Thread_Pool_Load_HTML();
 
 	
